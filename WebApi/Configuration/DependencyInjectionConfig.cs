@@ -24,6 +24,9 @@ namespace api.Configuration
 
             services.AddScoped<ISpentInMonthService, SpentInMonthService>();
             services.AddScoped<ISpentInMonthRepository, SpentInMonthRepository>();
+
+            services.AddScoped<IBillService, BillService>();
+            services.AddScoped<IBillRepository, BillRepository>();
         }
     }
 }

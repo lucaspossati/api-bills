@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Manager.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace Application.VM
     public class MonthVM
     {
         public Guid? Id { get; set; }
-        public string Name { get; set; }
-        public ICollection<SpentInMonthVM> SpentInMonths { get; set; }
+        public string? Name { get; set; }
+        public ICollection<SpentInMonthVM>? SpentInMonths { get; set; }
+        public ICollection<BillVM>? Bills { get; set; }
     }
 }

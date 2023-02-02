@@ -29,47 +29,52 @@ namespace Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
 
-                    b.Property<string>("Assunto")
+                    b.Property<string>("ClientName")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("assunto");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("client_name");
 
-                    b.Property<string>("Cliente")
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
+                        .HasColumnName("message");
+
+                    b.Property<string>("OriginEmail")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("origin_email");
+
+                    b.Property<string>("RecipientEmail")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("recipient_email");
+
+                    b.Property<string>("RecipientNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("recipient_number");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("subject");
+
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("cliente");
+                        .HasColumnName("type");
 
-                    b.Property<string>("EmailDestinatario")
+                    b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("email_destinatario");
-
-                    b.Property<string>("EmailOrigem")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("email_origem");
-
-                    b.Property<string>("Mensagem")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("mensagem");
-
-                    b.Property<string>("NomeUsuario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("nome_usuario");
-
-                    b.Property<string>("NumDestinatario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("num_destinatario");
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("tipo");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id");
 
@@ -118,6 +123,38 @@ namespace Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Application.Models.Bill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("MonthId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("salary");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MonthId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Bill");
+                });
+
             modelBuilder.Entity("Application.Models.Month", b =>
                 {
                     b.Property<Guid?>("Id")
@@ -143,6 +180,9 @@ namespace Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
 
+                    b.Property<Guid>("MonthId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("SpendPercentageAbove")
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("spent_percentage_above");
@@ -151,9 +191,68 @@ namespace Data.Migrations
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("spent");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("MonthId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("SpentInMonth");
+                });
+
+            modelBuilder.Entity("Application.Models.Bill", b =>
+                {
+                    b.HasOne("Application.Models.Month", "Month")
+                        .WithMany("Bills")
+                        .HasForeignKey("MonthId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Domain.Models.User", "User")
+                        .WithMany("Bills")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Month");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Application.Models.SpentInMonth", b =>
+                {
+                    b.HasOne("Application.Models.Month", "Month")
+                        .WithMany("SpentInMonth")
+                        .HasForeignKey("MonthId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Domain.Models.User", "User")
+                        .WithMany("SpentInMonth")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Month");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Domain.Models.User", b =>
+                {
+                    b.Navigation("Bills");
+
+                    b.Navigation("SpentInMonth");
+                });
+
+            modelBuilder.Entity("Application.Models.Month", b =>
+                {
+                    b.Navigation("Bills");
+
+                    b.Navigation("SpentInMonth");
                 });
 #pragma warning restore 612, 618
         }

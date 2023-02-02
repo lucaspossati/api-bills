@@ -7,9 +7,7 @@ namespace api.Configuration
     {
         public static void AddFluentValidationConfiguration(this IServiceCollection services)
         {
-            services.AddControllers()
-                .AddFluentValidation(x => x.
-                    RegisterValidatorsFromAssemblyContaining<Startup>());
+            services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
         }
     }
 }

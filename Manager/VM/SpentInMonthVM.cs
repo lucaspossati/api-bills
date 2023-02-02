@@ -14,9 +14,9 @@ namespace Application.VM
     {
         public Guid Id { get; set; }
         public Guid IdMonth { get; set; }
-        public virtual MonthVM Month { get; set; }
-        public Guid? IdUser { get; set; }
-        public virtual UserVM User { get; set; }
+        public MonthVM? Month { get; set; }
+        public Guid IdUser { get; set; }
+        public UserVM? User { get; set; }
         public decimal Spent { get; set; }
         public decimal SpendPercentageAbove { get; set; }
     }

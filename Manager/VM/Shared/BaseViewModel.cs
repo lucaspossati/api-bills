@@ -4,7 +4,7 @@ namespace api.Domain.VM.Shared
 {
     public abstract class BaseViewModel
     {
-        public List<Error> Errors { get; private set; } 
+        public List<Error>? Errors { get; private set; } 
 
         public void SetErrors(List<Error> errors)
         {

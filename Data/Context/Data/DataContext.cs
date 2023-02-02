@@ -10,6 +10,7 @@ namespace API.Data{
         public DbSet<User> Users { get; set; }
         public DbSet<Month> Months { get; set; }
         public DbSet<SpentInMonth> SpentInMonth { get; set; }
+        public DbSet<Bill> Bill { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -25,6 +26,7 @@ namespace API.Data{
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new MonthConfiguration());
             modelBuilder.ApplyConfiguration(new SpentInMonthConfiguration());
+            modelBuilder.ApplyConfiguration(new BillConfiguration());
         }
     }
 }

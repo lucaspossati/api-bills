@@ -15,7 +15,8 @@ public static class JwtConfig
     {
         services.AddSingleton<IJWTService, JWTService>();
 
-        var key = Encoding.ASCII.GetBytes(configuration.GetSection("JWT:Secret").Value);
+        var secret = configuration.GetSection("JWT:Secret").Value;
+        var key = Encoding.ASCII.GetBytes(secret == null ? "" : secret);
 
         services.AddAuthentication(p =>
         {

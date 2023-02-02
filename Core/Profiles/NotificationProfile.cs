@@ -11,7 +11,7 @@ namespace api.Profiles
             CreateMap<NotificationVM, Notification>();
 
             CreateMap<Notification, NotificationVM>()
-                .ForMember(nvm => nvm.NomeTipo, options => options.MapFrom(n => n.Tipo.ToString()));
+                .ForMember(nvm => nvm.TypeName, options => options.MapFrom(n => n.Type.ToString()));
         }
     }
 }

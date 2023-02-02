@@ -7,17 +7,27 @@ namespace Core.Validator.Notification
     {
         public CreateNotificationValidator()
         {
-            RuleFor(p => p.Mensagem)
-                .NotNull()
-                .MinimumLength(2).WithMessage("Mensagem precisa ter mais de 1 caracter")
-                .MaximumLength(200).WithMessage("Mensagem não pode ter mais de 200 caracteres");
+            RuleFor(p => p.Message)
+                .NotNull().WithMessage("Message can't be null")
+                .MinimumLength(2).WithMessage("Message must to be more than 1 character")
+                .MaximumLength(200).WithMessage("Message can't be more than 200 character");
 
-            RuleFor(p => p.Assunto).NotNull().NotEmpty().WithMessage("Assunto é obrigatório");
-            RuleFor(p => p.Cliente).NotNull().NotEmpty().WithMessage("Cliente é obrigatório");
-            RuleFor(p => p.NomeUsuario).NotNull().NotEmpty().WithMessage("NomeUsuario é obrigatório");
+            RuleFor(p => p.Subject)
+                .NotNull().WithMessage("Subject is required")
+                .NotEmpty().WithMessage("Subject is required");
 
-            RuleFor(p => p.EmailDestinatario).EmailAddress().WithMessage("Email inválido");
-            RuleFor(p => p.Tipo).NotNull().IsInEnum().WithMessage("Tipo inválido");
+            RuleFor(p => p.ClientName)
+                .NotNull().WithMessage("ClientName is required")
+                .NotEmpty().WithMessage("ClientName is required");
+
+            RuleFor(p => p.UserName)
+                .NotNull().WithMessage("UserName is required")
+                .NotEmpty().WithMessage("UserName is required");
+
+            RuleFor(p => p.RecipientEmail).
+                EmailAddress().WithMessage("Email invalid");
+
+            RuleFor(p => p.Type).NotNull().IsInEnum().WithMessage("Type invalid");
         }
     }
 }

@@ -10,16 +10,20 @@ namespace API.Domain.Models{
     {
         public Guid? Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         public decimal Salary { get; set; }
 
         public decimal SalarySave { get; set; }
 
         public ETypeRole Role { get; set; }
+
+        public ICollection<SpentInMonth>? SpentInMonth { get; set; }
+
+        public ICollection<Bill>? Bills { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Data.Repository
             var response = await context.Notifications.ToListAsync();
 
             if (filter != null)
-                response = response.Where(x => x.Tipo == filter.Value).ToList();
+                response = response.Where(x => x.Type == filter.Value).ToList();
 
             return response;
         }

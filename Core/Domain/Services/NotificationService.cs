@@ -34,7 +34,7 @@ namespace api.Domain.Services
             var response = await notificationRepository.Get(filter);
 
             if (filter != null)
-                response = response.Where(x => x.Tipo == filter.Value).ToList();
+                response = response.Where(x => x.Type == filter.Value).ToList();
 
             var responseVM = mapper.Map<List<NotificationVM>>(response);
 

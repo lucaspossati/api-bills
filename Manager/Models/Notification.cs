@@ -6,32 +6,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace API.Domain.Models{
     public class Notification
     {
-        [Key]
-        [Column("id")]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
-        [Column("tipo")]
-        public ETypeNotification Tipo { get; private set; }
+        public ETypeNotification Type { get; set; }
 
-        [Column("mensagem")]
-        public string Mensagem { get; private set; }
+        public string? Message { get; set; }
 
-        [Column("email_destinatario")]
-        public string EmailDestinatario { get; private set; }
+        public string? RecipientEmail { get; set; }
 
-        [Column("num_destinatario")]
-        public string NumDestinatario { get; private set; }
+        public string? RecipientNumber { get; set; }
 
-        [Column("email_origem")]
-        public string EmailOrigem { get; private set; }
+        public string? OriginEmail { get; set; }
 
-        [Column("assunto")]
-        public string Assunto { get; private set; }
+        public string? Subject { get; set; }
 
-        [Column("cliente")]
-        public string Cliente { get; private set; }
+        public string? ClientName { get; set; }
 
-        [Column("nome_usuario")]
-        public string NomeUsuario { get; private set; }
+        public string? UserName { get; set; }
     }
 }

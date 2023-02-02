@@ -23,7 +23,7 @@ namespace Data.Repository
             return await context.SpentInMonth.ToListAsync();
         }
 
-        public async Task<SpentInMonth> Get(Guid id)
+        public async Task<SpentInMonth?> Get(Guid id)
         {
             return await context.SpentInMonth.FindAsync(id);
         }
@@ -49,6 +49,8 @@ namespace Data.Repository
         public async Task Delete(Guid id)
         {
             var model = await context.SpentInMonth.FindAsync(id);
+
+            if (model == null) return;
 
             context.SpentInMonth.Remove(model);
 

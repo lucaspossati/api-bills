@@ -12,6 +12,7 @@ namespace api.Configuration
             services.AddAutoMapper(
                 typeof(NotificationProfile), 
                 typeof(UserProfile),
+                typeof(BillProfile),
                 typeof(SpentInMonthProfile));
 
         }
