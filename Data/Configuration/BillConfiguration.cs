@@ -16,6 +16,8 @@ namespace Data.Configuration
         public void Configure(EntityTypeBuilder<Bill> builder)
         {
             builder.Property(x => x.Id).HasColumnName("id").IsRequired();
+            builder.Property(x => x.MonthId).HasColumnName("month_id").IsRequired();
+            builder.Property(x => x.UserId).HasColumnName("user_id").IsRequired();
 
             builder.Property(p => p.Name).HasMaxLength(100).HasColumnName("name").IsRequired();
 

@@ -15,6 +15,9 @@ namespace Data.Configuration
         {
             builder.Property(x => x.Id).HasColumnName("id").IsRequired();
 
+            builder.Property(x => x.MonthId).HasColumnName("month_id").IsRequired();
+            builder.Property(x => x.UserId).HasColumnName("user_id").IsRequired();
+
             builder.Property(p => p.Spent)
                 .HasColumnType("decimal(18,4)")
                 .HasColumnName("spent")

@@ -4,6 +4,8 @@ using api.Domain.Services.Interfaces;
 using api.Domain.VM.Shared;
 using API.Domain.Models;
 using API.Domain.VM;
+using Application.Models;
+using Application.VM;
 using AutoMapper;
 using Core.Validator;
 using Core.Validator.User;
@@ -20,11 +22,19 @@ namespace api.Domain.Services
     {
         private readonly IMapper mapper;
         private readonly IUserRepository userRepository;
+        private readonly ISpentInMonthRepository spentInMonthRepository;
+        private readonly IMonthRepository monthRepository;
 
-        public UserService(IMapper mapper, IUserRepository userRepository)
+        public UserService(
+            IMapper mapper, 
+            IUserRepository userRepository,
+            IMonthRepository monthRepository,
+            ISpentInMonthRepository spentInMonthRepository)
         {
             this.mapper = mapper;
             this.userRepository = userRepository;
+            this.spentInMonthRepository = spentInMonthRepository;
+            this.monthRepository = monthRepository;
         }
 
         public async Task<List<UserVM>> Get()
@@ -51,7 +61,7 @@ namespace api.Domain.Services
 
             var userByEmail = await userRepository.GetByEmail(model.Email);
 
-            if(userByEmail != null)
+            if (userByEmail != null)
             {
                 model.AddError("E-mail already registered", "Email");
             }
@@ -64,6 +74,8 @@ namespace api.Domain.Services
             var vmToModel = mapper.Map<User>(model);
 
             await userRepository.Post(vmToModel);
+
+            await RegisterSpentInMonth(model);
 
             return model;
         }
@@ -99,6 +111,25 @@ namespace api.Domain.Services
             await userRepository.Delete(id);
 
             return mapper.Map<UserVM>(model); ;
+        }
+
+        private async Task RegisterSpentInMonth(UserVM model)
+        {
+            var monthList = await monthRepository.Get();
+
+            foreach (var month in monthList)
+            {
+                var spentInMonth = new SpentInMonth
+                {
+                    Id = Guid.NewGuid(),
+                    MonthId = month.Id,
+                    UserId = model.Id,
+                    SpendPercentageAbove = 0,
+                    Spent = 0,
+                };
+
+                await spentInMonthRepository.Post(spentInMonth);
+            }
         }
     }
 }

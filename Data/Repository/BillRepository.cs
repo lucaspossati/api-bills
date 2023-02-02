@@ -20,17 +20,17 @@ namespace Data.Repository
 
         public async Task<List<Bill>> Get()
         {
-            return await context.Bill.ToListAsync();
+            return await context.Bills.ToListAsync();
         }
 
         public async Task<Bill?> Get(Guid id)
         {
-            return await context.Bill.FindAsync(id);
+            return await context.Bills.FindAsync(id);
         }
 
         public async Task<Bill> Post(Bill model)
         {
-            context.Bill.Add(model);
+            context.Bills.Add(model);
 
             await context.SaveChangesAsync();
 
@@ -48,11 +48,11 @@ namespace Data.Repository
 
         public async Task Delete(Guid id)
         {
-            var model = await context.Bill.FindAsync(id);
+            var model = await context.Bills.FindAsync(id);
 
             if (model == null) return;
 
-            context.Bill.Remove(model);
+            context.Bills.Remove(model);
 
             await context.SaveChangesAsync();
         }

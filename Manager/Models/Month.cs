@@ -8,7 +8,7 @@ namespace Application.Models
 {
     public class Month
     {
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
         public string? Name { get; set; }
         public ICollection<SpentInMonth>? SpentInMonth { get; set; }
         public ICollection<Bill>? Bills { get; set; }

@@ -10,7 +10,7 @@ namespace API.Data{
         public DbSet<User> Users { get; set; }
         public DbSet<Month> Months { get; set; }
         public DbSet<SpentInMonth> SpentInMonth { get; set; }
-        public DbSet<Bill> Bill { get; set; }
+        public DbSet<Bill> Bills { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
