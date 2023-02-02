@@ -1,0 +1,12 @@
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\bin\Debug\net6.0\Manager.deps.json
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\bin\Debug\net6.0\Manager.dll
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\bin\Debug\net6.0\Manager.pdb
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\obj\Debug\net6.0\Manager.csproj.AssemblyReference.cache
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\obj\Debug\net6.0\Manager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\obj\Debug\net6.0\Manager.AssemblyInfoInputs.cache
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\obj\Debug\net6.0\Manager.AssemblyInfo.cs
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\obj\Debug\net6.0\Manager.csproj.CoreCompileInputs.cache
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\obj\Debug\net6.0\Manager.dll
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\obj\Debug\net6.0\refint\Manager.dll
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\obj\Debug\net6.0\Manager.pdb
+C:\Users\lucas\Documents\Projetos\bills\api-bills\api\Manager\obj\Debug\net6.0\ref\Manager.dll
