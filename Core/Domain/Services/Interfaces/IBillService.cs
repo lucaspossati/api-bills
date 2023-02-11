@@ -12,10 +12,10 @@ namespace api.Domain.Services.Interfaces
 {
     public interface IBillService
     {
-        public Task<List<BillVM>> Get();
-        public Task<BillVM> Get(Guid id);
-        public Task<BillVM> Post(BillVM model);
-        public Task<BillVM> Put(BillVM model);
-        public Task<BillVM> Delete(Guid id);
+        Task<List<BillVM>> Get();
+        Task<BillVM> Get(Guid id);
+        Task<BillVM> Post(BillVM model);
+        Task<BillVM> Put(BillVM model);
+        Task<BillVM> Delete(Guid id);
     }
 }

@@ -9,6 +9,7 @@ using Application.VM;
 using AutoMapper;
 using Core.Validator;
 using Core.Validator.User;
+using Data.Repository;
 using Data.Repository.Interface;
 using FluentValidation.Results;
 using System;
@@ -18,23 +19,26 @@ using System.Threading.Tasks;
 
 namespace api.Domain.Services
 {
-    public class UserService: IUserService
+    public class UserService : IUserService
     {
         private readonly IMapper mapper;
         private readonly IUserRepository userRepository;
         private readonly ISpentInMonthRepository spentInMonthRepository;
         private readonly IMonthRepository monthRepository;
+        private readonly IAuthenticationRepository authRepository;
 
         public UserService(
-            IMapper mapper, 
+            IMapper mapper,
             IUserRepository userRepository,
             IMonthRepository monthRepository,
-            ISpentInMonthRepository spentInMonthRepository)
+            ISpentInMonthRepository spentInMonthRepository,
+            IAuthenticationRepository authRepository)
         {
             this.mapper = mapper;
             this.userRepository = userRepository;
             this.spentInMonthRepository = spentInMonthRepository;
             this.monthRepository = monthRepository;
+            this.authRepository = authRepository;
         }
 
         public async Task<List<UserVM>> Get()
@@ -49,6 +53,31 @@ namespace api.Domain.Services
             var response = await userRepository.Get(id);
 
             return mapper.Map<UserVM>(response);
+        }
+
+        public async Task<UserVM> GetByEmail(string email)
+        {
+            var response = await userRepository.GetByEmail(email);
+
+            return mapper.Map<UserVM>(response);
+        }
+
+        public async Task<UserAuthenticatedVM> CreateAndAuthenticate(UserVM model)
+        {
+            var password = model.Password;
+            var user = await Post(model);
+
+            if (model.Errors != null && model.Errors.Count > 0)
+            {
+                return new UserAuthenticatedVM
+                {
+                    Token = null,
+                    User = user
+                };
+            }
+
+            var login = await Login(model.Email, password);
+            return login;
         }
 
         public async Task<UserVM> Post(UserVM model)
@@ -110,7 +139,7 @@ namespace api.Domain.Services
 
             await userRepository.Delete(id);
 
-            return mapper.Map<UserVM>(model); ;
+            return mapper.Map<UserVM>(model);
         }
 
         private async Task RegisterSpentInMonth(UserVM model)
@@ -130,6 +159,13 @@ namespace api.Domain.Services
 
                 await spentInMonthRepository.Post(spentInMonth);
             }
+        }
+
+        private async Task<UserAuthenticatedVM> Login(string email, string password)
+        {
+            var response = await authRepository.Login(email, password);
+            return mapper.Map<UserAuthenticatedVM>(response);
+            
         }
     }
 }

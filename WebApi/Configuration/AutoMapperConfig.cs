@@ -13,6 +13,7 @@ namespace api.Configuration
                 typeof(NotificationProfile), 
                 typeof(UserProfile),
                 typeof(BillProfile),
+                typeof(UserAuthenticatedProfile),
                 typeof(SpentInMonthProfile));
 
         }

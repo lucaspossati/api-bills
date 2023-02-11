@@ -73,6 +73,59 @@ namespace api.Controllers
             };
         }
 
+        [HttpGet]
+        [Route("get-by-email/{email}")]
+        [Authorize]
+        public async Task<BaseResponse<UserVM>> GetByEmail([FromRoute] string email)
+        {
+            var response = await userService.GetByEmail(email);
+
+            if (response == null)
+            {
+                return new BaseResponse<UserVM>()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Message = "User not found",
+                    Success = false,
+                    Data = null
+                };
+            }
+
+            return new BaseResponse<UserVM>()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Message = "Succes to get user",
+                Success = true,
+                Data = response
+            };
+        }
+
+        [HttpPost]
+        [Route("create-and-authenticate")]
+        public async Task<BaseResponse<UserAuthenticatedVM>> CreateAndAuthenticate([FromBody] UserVM model)
+        {
+            var response = await userService.CreateAndAuthenticate(model);
+
+            if (response.Token == null)
+            {
+                return new BaseResponse<UserAuthenticatedVM>()
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Message = "Error to create user",
+                    Success = false,
+                    Data = response
+                };
+            }
+
+            return new BaseResponse<UserAuthenticatedVM>()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Message = "Success to create user",
+                Success = true,
+                Data = response
+            };
+        }
+
         [HttpPost]
         [Route("")]
         public async Task<BaseResponse<UserVM>> Post([FromBody] UserVM model)
@@ -106,7 +159,7 @@ namespace api.Controllers
         {
             var response = await userService.Put(model);
 
-            if (model.Errors != null)
+            if (response.Errors != null)
             {
                 return new BaseResponse<UserVM>()
                 {

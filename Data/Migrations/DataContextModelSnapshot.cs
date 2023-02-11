@@ -94,11 +94,11 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("email");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasColumnName("name");
+                        .HasColumnName("full_name");
 
                     b.Property<string>("Password")
                         .IsRequired()

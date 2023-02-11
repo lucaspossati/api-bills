@@ -11,10 +11,12 @@ namespace api.Domain.Services.Interfaces
 {
     public interface IUserService
     {
-        public Task<List<UserVM>> Get();
-        public Task<UserVM> Get(Guid id);
-        public Task<UserVM> Post(UserVM model);
-        public Task<UserVM> Put(UserVM model);
-        public Task<UserVM> Delete(Guid id);
+        Task<List<UserVM>> Get();
+        Task<UserVM> Get(Guid id);
+        Task<UserVM> GetByEmail(string email);
+        Task<UserVM> Post(UserVM model);
+        Task<UserVM> Put(UserVM model);
+        Task<UserVM> Delete(Guid id);
+        Task<UserAuthenticatedVM> CreateAndAuthenticate(UserVM model);
     }
 }

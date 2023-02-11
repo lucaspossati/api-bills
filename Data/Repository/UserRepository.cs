@@ -24,12 +24,17 @@ namespace Data.Repository
             return await context.Users.ToListAsync();
         }
 
-        public async Task<User> Get(Guid id)
+        public async Task<User?> Get(Guid id)
         {
             return await context.Users.FindAsync(id);
         }
 
-        public async Task<User> GetByEmail(string email, Guid? id = null)
+        public async Task<User?> GetByEmail(string email)
+        {
+            return await context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        }
+
+        public async Task<User?> GetByEmail(string email, Guid? id = null)
         {
             if(id == null) return await context.Users.FirstOrDefaultAsync(x => x.Email == email);
 

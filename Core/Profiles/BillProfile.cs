@@ -12,7 +12,9 @@ namespace api.Profiles
         {
             CreateMap<BillVM, Bill>();
 
-            CreateMap<Bill, BillVM>();
+            CreateMap<Bill, BillVM>()
+                .ForMember(nvm => nvm.User, options => options.Ignore())
+                .ForMember(nvm => nvm.Month, options => options.Ignore());
         }
     }
 }

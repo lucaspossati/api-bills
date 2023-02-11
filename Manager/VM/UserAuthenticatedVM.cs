@@ -8,6 +8,6 @@ namespace API.Domain.VM{
     {
         public string Token { get; set; }
 
-        public User User { get; set; }
+        public UserVM User { get; set; }
     }
 }

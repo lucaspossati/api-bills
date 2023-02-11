@@ -16,7 +16,7 @@ namespace Data.Configuration
         {
             builder.Property(x => x.Id).HasColumnName("id").IsRequired();
 
-            builder.Property(p => p.Name).HasMaxLength(100).HasColumnName("name").IsRequired();
+            builder.Property(p => p.FullName).HasMaxLength(100).HasColumnName("full_name").IsRequired();
             builder.Property(p => p.Email).HasMaxLength(100).HasColumnName("email").IsRequired();
             builder.Property(p => p.Password).HasMaxLength(200).HasColumnName("password").IsRequired();
 

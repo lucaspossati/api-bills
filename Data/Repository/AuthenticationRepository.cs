@@ -5,6 +5,7 @@ using API.ValueObjects;
 using BCrypt.Net;
 using Data.Repository.Interface;
 using Data.Services.Interface;
+using Manager.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Data.Repository
             this.jwtService = jwtService;
         }
 
-        public async Task<UserAuthenticatedVM> Login(string email, string password)
+        public async Task<UserAuthenticated> Login(string email, string password)
         {
             var user = await context.Users.FirstOrDefaultAsync(x => x.Email == email);
 
@@ -37,7 +38,7 @@ namespace Data.Repository
             var token = jwtService.GenerateToken(user);
             user.Password = "";
 
-            return new UserAuthenticatedVM
+            return new UserAuthenticated
             {
                 User = user,
                 Token = token

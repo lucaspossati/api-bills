@@ -7,7 +7,7 @@ namespace Core.Validator.User
     {
         public CreateUserValidator()
         {
-            RuleFor(p => p.Name)
+            RuleFor(p => p.FullName)
                 .NotNull().WithMessage("Name is required")
                 .MinimumLength(2).WithMessage("Name needs to have more than 1 character")
                 .MaximumLength(100).WithMessage("Name can't have more than 100 characters");
@@ -22,11 +22,6 @@ namespace Core.Validator.User
                 .MinimumLength(2).WithMessage("Password needs to have more than 1 character")
                 .MaximumLength(200).WithMessage("Password can't have more than 200 characters");
 
-            RuleFor(p => p.Salary)
-                .NotNull().WithMessage("Salary is required");
-
-            RuleFor(p => p.SalarySave)
-                .NotNull().WithMessage("SalarySave is required");
 
             RuleFor(p => p.Role).NotNull().IsInEnum().WithMessage("Role invalid");
         }

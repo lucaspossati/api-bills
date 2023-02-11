@@ -9,9 +9,9 @@ namespace Data.Repository.Interface
     {
         Task<List<User>> Get();
 
-        Task<User> Get(Guid id);
+        Task<User?> Get(Guid id);
 
-        Task<User> GetByEmail(string email, Guid? id = null);
+        Task<User?> GetByEmail(string email, Guid? id = null);
 
         Task<User> Post(User model);
 

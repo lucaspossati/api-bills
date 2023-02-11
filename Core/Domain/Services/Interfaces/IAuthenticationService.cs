@@ -11,6 +11,6 @@ namespace api.Domain.Services.Interfaces
 {
     public interface IAuthenticationService
     {
-        public Task<UserAuthenticatedVM> Login(string email, string password);
+        Task<UserAuthenticatedVM> Login(string email, string password);
     }
 }

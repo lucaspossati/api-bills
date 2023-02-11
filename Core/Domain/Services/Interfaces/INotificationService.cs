@@ -11,10 +11,10 @@ namespace api.Domain.Services.Interfaces
 {
     public interface INotificationService
     {
-        public Task<BaseResponse<List<NotificationVM>>> Get(ETypeNotification? filter);
-        public Task<BaseResponse<NotificationVM>> Get(Guid id);
-        public Task<BaseResponse<NotificationVM>> Post(NotificationVM model);
-        public Task<BaseResponse<NotificationVM>> Put(NotificationVM model);
-        public Task<BaseResponse<object>> Delete(Guid id);
+        Task<BaseResponse<List<NotificationVM>>> Get(ETypeNotification? filter);
+        Task<BaseResponse<NotificationVM>> Get(Guid id);
+        Task<BaseResponse<NotificationVM>> Post(NotificationVM model);
+        Task<BaseResponse<NotificationVM>> Put(NotificationVM model);
+        Task<BaseResponse<object>> Delete(Guid id);
     }
 }

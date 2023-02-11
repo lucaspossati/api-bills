@@ -31,6 +31,7 @@ namespace Data.Services
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Name, user.FullName),
                     new Claim(ClaimTypes.Role, user.Role.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(configuration.GetSection("JWT:ExpireInMinutes").Value)),

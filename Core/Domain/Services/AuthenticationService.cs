@@ -27,7 +27,8 @@ namespace api.Domain.Services
 
         public async Task<UserAuthenticatedVM> Login(string email, string password)
         {
-            return await authenticationRepository.Login(email, password);
+            var response = await authenticationRepository.Login(email, password);
+            return mapper.Map<UserAuthenticatedVM>(response);
         }
     }
 }

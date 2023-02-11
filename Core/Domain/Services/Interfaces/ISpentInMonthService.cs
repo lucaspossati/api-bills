@@ -9,10 +9,10 @@ namespace Core.Domain.Services.Interfaces
 {
     public interface ISpentInMonthService
     {
-        public Task<List<SpentInMonthVM>> Get();
-        public Task<SpentInMonthVM> Get(Guid id);
-        public Task<SpentInMonthVM> Post(SpentInMonthVM model);
-        public Task<SpentInMonthVM> Put(SpentInMonthVM model);
-        public Task<SpentInMonthVM> Delete(Guid id);
+        Task<List<SpentInMonthVM>> Get();
+        Task<SpentInMonthVM> Get(Guid id);
+        Task<SpentInMonthVM> Post(SpentInMonthVM model);
+        Task<SpentInMonthVM> Put(SpentInMonthVM model);
+        Task<SpentInMonthVM> Delete(Guid id);
     }
 }
