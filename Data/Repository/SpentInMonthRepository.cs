@@ -20,12 +20,27 @@ namespace Data.Repository
 
         public async Task<List<SpentInMonth>> Get()
         {
-            return await context.SpentInMonth.ToListAsync();
+            var response = await context.SpentInMonth
+                .Include(x => x.Month)
+                .Include(x => x.User)
+                .OrderBy(x => x.Month.Ordination)
+                .ToListAsync();
+            return response;
         }
 
         public async Task<SpentInMonth?> Get(Guid id)
         {
             return await context.SpentInMonth.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<SpentInMonth>> GetByIdUser(Guid id)
+        {
+            var teste = (await context.SpentInMonth
+                .Include(x => x.Month)
+                .Include(x => x.User)
+                .OrderBy(x => x.Month.Ordination).ToListAsync()).Where(x => x.UserId == id);
+
+            return teste;
         }
 
         public async Task<SpentInMonth> Post(SpentInMonth model)

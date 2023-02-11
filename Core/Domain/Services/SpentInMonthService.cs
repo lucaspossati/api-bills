@@ -27,9 +27,18 @@ namespace Core.Domain.Services
 
         public async Task<List<SpentInMonthVM>> Get()
         {
-            var response = await spentInMonthRepository.Get();
+            try
+            {
+                var response = await spentInMonthRepository.Get();
 
-            return mapper.Map<List<SpentInMonthVM>>(response);
+                return mapper.Map<List<SpentInMonthVM>>(response);
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex.Message);
+                return null;
+            }
+            
         }
 
         public async Task<SpentInMonthVM> Get(Guid id)
@@ -37,6 +46,13 @@ namespace Core.Domain.Services
             var response = await spentInMonthRepository.Get(id);
 
             return mapper.Map<SpentInMonthVM>(response);
+        }
+
+        public async Task<IEnumerable<SpentInMonthVM>> GetByIdUser(Guid id)
+        {
+            var response = await spentInMonthRepository.GetByIdUser(id);
+
+            return mapper.Map<IEnumerable<SpentInMonthVM>>(response);
         }
 
         public async Task<SpentInMonthVM> Post(SpentInMonthVM model)

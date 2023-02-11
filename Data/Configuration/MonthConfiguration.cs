@@ -16,6 +16,8 @@ namespace Data.Configuration
             builder.Property(x => x.Id).HasColumnName("id").IsRequired();
 
             builder.Property(p => p.Name).HasColumnName("name").HasMaxLength(100).IsRequired();
+
+            builder.Property(p => p.Ordination).HasColumnName("ordination").IsRequired();
         }
     }
 }

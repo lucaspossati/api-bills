@@ -9,6 +9,7 @@ namespace Core.Domain.Services.Interfaces
 {
     public interface ISpentInMonthService
     {
+        Task<IEnumerable<SpentInMonthVM>> GetByIdUser(Guid id);
         Task<List<SpentInMonthVM>> Get();
         Task<SpentInMonthVM> Get(Guid id);
         Task<SpentInMonthVM> Post(SpentInMonthVM model);

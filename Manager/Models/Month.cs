@@ -10,6 +10,7 @@ namespace Application.Models
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
+        public int? Ordination { get; set; }
         public ICollection<SpentInMonth>? SpentInMonth { get; set; }
         public ICollection<Bill>? Bills { get; set; }
     }

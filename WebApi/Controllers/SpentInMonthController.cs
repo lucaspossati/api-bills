@@ -74,5 +74,32 @@ namespace api.Controllers
                 Data = response
             };
         }
+
+        [HttpGet]
+        [Route("get-by-id-user/{id:guid}")]
+        [Authorize]
+        public async Task<BaseResponse<IEnumerable<SpentInMonthVM>>> GetByIdUser([FromRoute] Guid id)
+        {
+            var response = await spentInMonthService.GetByIdUser(id);
+
+            if (response == null)
+            {
+                return new BaseResponse<IEnumerable<SpentInMonthVM>>()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Message = "Spents not found",
+                    Success = false,
+                    Data = null
+                };
+            }
+
+            return new BaseResponse<IEnumerable<SpentInMonthVM>>()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Message = "Succes to get spents in month",
+                Success = true,
+                Data = response
+            };
+        }
     }
 }

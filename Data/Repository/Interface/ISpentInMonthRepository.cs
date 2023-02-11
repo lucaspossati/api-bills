@@ -10,6 +10,8 @@ namespace Data.Repository.Interface
     {
         Task<List<SpentInMonth>> Get();
 
+        Task<IEnumerable<SpentInMonth>> GetByIdUser(Guid id);
+
         Task<SpentInMonth?> Get(Guid id);
 
         Task<SpentInMonth> Post(SpentInMonth model);

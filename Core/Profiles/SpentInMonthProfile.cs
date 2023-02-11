@@ -1,4 +1,5 @@
-﻿using Application.Models;
+﻿using API.Domain.Models;
+using Application.Models;
 using Application.VM;
 using AutoMapper;
 using System;
@@ -15,11 +16,9 @@ namespace Core.Profiles
         {
             CreateMap<SpentInMonthVM, SpentInMonth>();
 
-            CreateMap<SpentInMonth, SpentInMonthVM>();
-
             CreateMap<SpentInMonth, SpentInMonthVM>()
                 .ForMember(nvm => nvm.User, options => options.Ignore())
-                .ForMember(nvm => nvm.Month, options => options.Ignore());
+                .ForMember(nvm => nvm.Month, options => options.MapFrom(sp => sp.Month));
         }
     }
 }

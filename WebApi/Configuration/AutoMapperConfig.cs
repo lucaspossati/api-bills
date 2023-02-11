@@ -14,6 +14,7 @@ namespace api.Configuration
                 typeof(UserProfile),
                 typeof(BillProfile),
                 typeof(UserAuthenticatedProfile),
+                typeof(MonthProfile),
                 typeof(SpentInMonthProfile));
 
         }
