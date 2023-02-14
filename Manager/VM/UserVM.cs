@@ -24,6 +24,8 @@ namespace API.Domain.VM{
 
         public string? RoleName { get; set; }
 
+        public bool Active { get; set; }
+
         public ICollection<SpentInMonthVM>? SpentInMonth { get; set; }
         public ICollection<BillVM>? Bills { get; set; }
     }

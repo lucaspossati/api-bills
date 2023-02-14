@@ -8,7 +8,7 @@ namespace Data.Repository.Interface
 {
     public interface IBillRepository
     {
-        Task<List<Bill>> Get();
+        Task<IEnumerable<Bill>> Get(Guid userId, Guid monthId);
 
         Task<Bill?> Get(Guid id);
 

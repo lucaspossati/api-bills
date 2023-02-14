@@ -18,9 +18,12 @@ namespace Data.Repository
             this.context = context;
         }
 
-        public async Task<List<Bill>> Get()
+        public async Task<IEnumerable<Bill>> Get(Guid userId, Guid monthId)
         {
-            return await context.Bills.ToListAsync();
+            return (await context.Bills
+                .Include(x => x.Month)
+                .ToListAsync())
+                .Where(x => x.UserId == userId && x.MonthId == monthId);
         }
 
         public async Task<Bill?> Get(Guid id)

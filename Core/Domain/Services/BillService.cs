@@ -29,9 +29,9 @@ namespace api.Domain.Services
             this.billRepository = billRepository;
         }
 
-        public async Task<List<BillVM>> Get()
+        public async Task<IEnumerable<BillVM>> Get(Guid userId, Guid monthId)
         {
-            var response = await billRepository.Get();
+            var response = await billRepository.Get(userId, monthId);
 
             return mapper.Map<List<BillVM>>(response);
         }

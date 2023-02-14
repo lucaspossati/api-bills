@@ -18,5 +18,7 @@ namespace Data.Repository.Interface
         Task<User> Put(User model);
 
         Task Delete(Guid id);
+
+        Task<bool> ActivateUser(string token, Guid id);
     }
 }

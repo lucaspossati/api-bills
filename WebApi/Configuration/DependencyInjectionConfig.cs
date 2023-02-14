@@ -29,6 +29,8 @@ namespace api.Configuration
             services.AddScoped<IBillRepository, BillRepository>();
 
             services.AddScoped<IMonthRepository, MonthRepository>();
+
+            services.AddScoped<IEmailService, EmailService>();
         }
     }
 }

@@ -19,6 +19,9 @@ namespace Data.Configuration
             builder.Property(p => p.FullName).HasMaxLength(100).HasColumnName("full_name").IsRequired();
             builder.Property(p => p.Email).HasMaxLength(100).HasColumnName("email").IsRequired();
             builder.Property(p => p.Password).HasMaxLength(200).HasColumnName("password").IsRequired();
+            builder.Property(p => p.TokenExpirationDate).HasColumnName("token_expiration_date").IsRequired();
+            builder.Property(p => p.Active).HasColumnName("active").IsRequired();
+            builder.Property(p => p.Token).HasColumnName("token").IsRequired();
 
             builder.Property(p => p.Salary)
                 .HasColumnType("decimal(18,4)")

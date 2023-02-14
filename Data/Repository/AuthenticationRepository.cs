@@ -27,7 +27,7 @@ namespace Data.Repository
 
         public async Task<UserAuthenticated> Login(string email, string password)
         {
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Email == email && x.Active == true);
 
             if (user == null) return null;
 

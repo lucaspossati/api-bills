@@ -24,13 +24,13 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        [Route("")]
-        [Authorize(Roles = "Admin")]
-        public async Task<BaseResponse<List<BillVM>>> Get()
+        [Route("{userId:guid}/{monthId:guid}")]
+        [Authorize]
+        public async Task<BaseResponse<IEnumerable<BillVM>>> Get([FromRoute] Guid userId, [FromRoute] Guid monthId)
         {
-            var response = await billService.Get();
+            var response = await billService.Get(userId, monthId);
 
-            return new BaseResponse<List<BillVM>>()
+            return new BaseResponse<IEnumerable<BillVM>>()
             {
                 StatusCode = HttpStatusCode.OK,
                 Message = "Success to list bills",

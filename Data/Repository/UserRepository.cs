@@ -67,5 +67,21 @@ namespace Data.Repository
 
             await context.SaveChangesAsync();
         }
+
+        public async Task<bool> ActivateUser(string token, Guid id)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Token == token && x.Id == id);
+
+            if (user == null) return false;
+
+            if (user.TokenExpirationDate < DateTime.UtcNow) return false;
+
+            user.Active = true;
+            user.TokenExpirationDate = DateTime.UtcNow;
+
+            await Put(user);
+
+            return true;
+        }
     }
 }

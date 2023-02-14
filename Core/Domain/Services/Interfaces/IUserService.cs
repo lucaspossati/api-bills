@@ -18,5 +18,7 @@ namespace api.Domain.Services.Interfaces
         Task<UserVM> Put(UserVM model);
         Task<UserVM> Delete(Guid id);
         Task<UserAuthenticatedVM> CreateAndAuthenticate(UserVM model);
+        Task<bool> ActivateUser(string token, Guid id);
+        Task<bool> SendActivationEmail(Guid id);
     }
 }

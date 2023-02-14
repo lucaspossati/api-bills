@@ -106,7 +106,7 @@ namespace api.Controllers
         {
             var response = await userService.CreateAndAuthenticate(model);
 
-            if (response.Token == null)
+            if (response == null)
             {
                 return new BaseResponse<UserAuthenticatedVM>()
                 {
@@ -201,6 +201,58 @@ namespace api.Controllers
             {
                 StatusCode = HttpStatusCode.OK,
                 Message = "Success to delete user",
+                Success = true,
+                Data = null
+            };
+        }
+
+        [HttpPost]
+        [Route("activate-user/{token}/{id:guid}")]
+        public async Task<BaseResponse<object>> ActivateUser([FromRoute] string token, [FromRoute] Guid id)
+        {
+            var response = await userService.ActivateUser(token, id);
+
+            if (response == false)
+            {
+                return new BaseResponse<object>()
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Message = "Error to activate user",
+                    Success = false,
+                    Data = null
+                };
+            }
+
+            return new BaseResponse<object>()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Message = "Success to activate user",
+                Success = true,
+                Data = null
+            };
+        }
+
+        [HttpPost]
+        [Route("send-activation-email/{id:guid}")]
+        public async Task<BaseResponse<object>> SendActivationEmail([FromRoute] Guid id)
+        {
+            var response = await userService.SendActivationEmail(id);
+
+            if (response == false)
+            {
+                return new BaseResponse<object>()
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Message = "Error sending email to user",
+                    Success = false,
+                    Data = null
+                };
+            }
+
+            return new BaseResponse<object>()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Message = "Success sending email to user",
                 Success = true,
                 Data = null
             };

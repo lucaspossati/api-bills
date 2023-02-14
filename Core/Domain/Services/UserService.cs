@@ -12,9 +12,12 @@ using Core.Validator.User;
 using Data.Repository;
 using Data.Repository.Interface;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace api.Domain.Services
@@ -26,12 +29,14 @@ namespace api.Domain.Services
         private readonly ISpentInMonthRepository spentInMonthRepository;
         private readonly IMonthRepository monthRepository;
         private readonly IAuthenticationRepository authRepository;
+        private readonly IEmailService emailService;
 
         public UserService(
             IMapper mapper,
             IUserRepository userRepository,
             IMonthRepository monthRepository,
             ISpentInMonthRepository spentInMonthRepository,
+            IEmailService emailService,
             IAuthenticationRepository authRepository)
         {
             this.mapper = mapper;
@@ -39,6 +44,7 @@ namespace api.Domain.Services
             this.spentInMonthRepository = spentInMonthRepository;
             this.monthRepository = monthRepository;
             this.authRepository = authRepository;
+            this.emailService = emailService;
         }
 
         public async Task<List<UserVM>> Get()
@@ -102,9 +108,15 @@ namespace api.Domain.Services
 
             var vmToModel = mapper.Map<User>(model);
 
+            vmToModel.Token = NewUserToken();
+            vmToModel.TokenExpirationDate = DateTime.UtcNow.AddDays(1);
+            vmToModel.Active = false;
+
             await userRepository.Post(vmToModel);
 
             await RegisterSpentInMonth(model);
+
+            var response = await emailService.SendEmail(model.Email, model.FullName, "User created with success", vmToModel.Token, vmToModel.Id.Value);
 
             return model;
         }
@@ -161,11 +173,51 @@ namespace api.Domain.Services
             }
         }
 
+        public async Task<bool> ActivateUser(string token, Guid id)
+        {
+            return await userRepository.ActivateUser(token, id);
+        }
+
+        public async Task<bool> SendActivationEmail(Guid id)
+        {
+            var user = await userRepository.Get(id);
+
+            if (user == null) return false;
+
+            user.Token = NewUserToken();
+            user.TokenExpirationDate = DateTime.UtcNow.AddDays(1);
+
+            await userRepository.Put(mapper.Map<User>(user));
+
+            var response = await emailService.SendEmail(user.Email, user.FullName, "User created with success", user.Token, user.Id.Value);
+
+            if (!response.IsSuccessStatusCode) return false;
+
+            return true;
+        }
+
+        private string NewUserToken()
+        {
+            return WebEncoders.Base64UrlEncode(GenerateRandomBytes(32));
+        }
+
+        private static byte[] GenerateRandomBytes(int numberOfBytes)
+        {
+            using (RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider())
+            {
+                byte[] byteArray = new byte[numberOfBytes];
+                provider.GetBytes(byteArray);
+                return byteArray;
+            }
+        }
+
         private async Task<UserAuthenticatedVM> Login(string email, string password)
         {
             var response = await authRepository.Login(email, password);
             return mapper.Map<UserAuthenticatedVM>(response);
             
         }
+
+        
     }
 }

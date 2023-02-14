@@ -20,6 +20,12 @@ namespace API.Domain.Models{
 
         public decimal SalarySave { get; set; }
 
+        public string? Token { get; set; }
+
+        public DateTime? TokenExpirationDate { get; set; }
+
+        public bool Active { get; set; }
+
         public ETypeRole Role { get; set; }
 
         public ICollection<SpentInMonth>? SpentInMonth { get; set; }
